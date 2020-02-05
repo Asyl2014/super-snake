@@ -12,35 +12,34 @@ import DrawingHelpers from '../utilites/drawingHelpers.js';
 
 export  default class GameState extends State {
     constructor() {
-        let field = new FieldModel(25, 25);
-        let snake = new SnakeModel(0, 0, 3, field);
-        field.creatApple(snake);
+        const socket = io();
+
+        socket.emit('spawn');
+        socket.on('update', data => {
+            console.log(data);
+        })
 
         super({
-            'w': () =>  snake.turnUp(),
-            'a': () =>  snake.turnLeft(),
-            's': () =>  snake.turnDown(),
-            'd': () =>  snake.turnRight(),
-            ' ': () => state = new PauseState(this) 
+            'w': () =>  socket.emit('command', 'w'),
+            'a': () =>  socket.emit('command', 'a'),
+            's': () =>  socket.emit('command', 's'),
+            'd': () =>  socket.emit('command', 'd'),
+            
         });
 
-        this._field = field;
-        this._snake = snake;
+        this._field = new FieldModel(25, 25);
+        this._socket = socket;
     }
 
     onDraw(ctx, screenWidth, screenHeight) {
         super.onDraw(ctx, screenWidth, screenHeight);      
 
-        this._snake.move();
-        if (this._snake.isDead) {
-            state = new GameOverState();
-        }
 
         FieldView.recalculateDrawingSizes(screenWidth, screenHeight, this._field);
         FieldView.draw(ctx, this._field);
-        SnakeView.draw(ctx, this._snake)
+
         
-        const [x, y] = [screenWidth / 2, 50]
-        DrawingHelpers.fillText(ctx, `Score: ${this._snake.score}`, x, y, '38px sans-serif', 'white')
+        //const [x, y] = [screenWidth / 2, 50]
+       // DrawingHelpers.fillText(ctx, `Score: ${this._snake.score}`, x, y, '38px sans-serif', 'white')
     }
 }

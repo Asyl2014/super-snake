@@ -1,0 +1,29 @@
+{
+  "name": "super-snake",
+  "version": "1.0.0",
+  "description": "Finish developing single-player mode",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Asyl2014/super-snake.git"
+  },
+  "keywords": [
+    "snake",
+    "socket.io",
+    "express"
+  ],
+  "author": "Choturaliev Asylbek <asylsan2014@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Asyl2014/super-snake/issues"
+  },
+  "homepage": "https://github.com/Asyl2014/super-snake#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  },
+  "type": "module"
+}
